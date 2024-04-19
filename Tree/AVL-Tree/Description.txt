@@ -1,0 +1,56 @@
+getHeight(rootNode)
+This helper function computes the height of a given node (rootNode). If the node is None, it returns 0, indicating that the height of an empty subtree is 0. If the node exists, it returns the height stored in the node’s height attribute.
+
+rightRotate(disbalncedNode)
+This function performs a right rotation on a subtree rooted at a node (disbalncedNode, though it seems like a typo and should be disbalancedNode) that has become left-heavy (i.e., the height of its left subtree has become greater than the height of its right subtree by more than 1). It restructures the subtree to maintain AVL balance by:
+
+Setting a new root from the left child of the disbalanced node.
+Adjusting the connections to ensure the structure of a binary search tree.
+Updating the heights of the rotated nodes (new root and old root).
+leftRotate(disbalancedNode)
+This function performs a left rotation on a subtree rooted at a node that has become right-heavy. The operations are analogous to rightRotate, but in the opposite direction, setting the new root from the right child and reorganizing the subtree accordingly.
+
+getBalance(rootNode)
+This function calculates the balance factor of a node by subtracting the height of its right subtree from the height of its left subtree. This helps determine whether the subtree rooted at this node is left-heavy, right-heavy, or balanced.
+
+insertNode(rootNode, nodeValue)
+This is the function to insert a new node with a value (nodeValue) into the AVL tree rooted at rootNode. It recursively finds the correct position for the new node to maintain the order properties of the binary search tree. After inserting the node, it updates the height and calculates the balance factor of each node starting from the leaf node up to the root. Based on the balance factor, it decides whether a rotation (left or right) or double rotation (left-right or right-left) is necessary to maintain the AVL balance. Each condition checks:
+
+If the node is left-heavy and the new node value is less than the left child's value, perform a right rotation.
+If the node is left-heavy but the new node value is greater than the left child's value, perform a left rotation on the left child and then a right rotation on the root.
+If the node is right-heavy and the new node value is greater than the right child's value, perform a left rotation.
+If the node is right-heavy but the new node value is less than the right child's value, perform a right rotation on the right child followed by a left rotation on the root.
+Finally, the function returns the new root of the subtree, which may have changed if rotations were performed. This recursive insertion and balancing ensure the tree remains balanced after every insert, adhering to AVL tree properties.
+
+Function getMinValueNode(rootNode)
+This helper function is used to find the node with the minimum value in a subtree rooted at rootNode. This is typically the leftmost node of the subtree. It is used during the deletion of a node that has two children to find the successor node (the smallest node in the right subtree) which will replace the deleted node.
+
+Function deleteNode(rootNode, nodeValue)
+This function recursively deletes a node with the specified nodeValue from the tree rooted at rootNode. The deletion process involves several steps:
+
+Node Search:
+If rootNode is None, it means the tree is empty or we have reached a leaf's child, so we return None.
+Recursively traverse the left subtree if nodeValue is less than rootNode.data.
+Recursively traverse the right subtree if nodeValue is greater than rootNode.data.
+Node Deletion:
+If the node to delete is found (nodeValue == rootNode.data):
+No Child: If the node has no children, it is simply removed by setting it to None.
+One Child: If the node has only one child, it is replaced directly by its child.
+Two Children: If the node has two children, the node's value is replaced with the minimum value in its right subtree (found using getMinValueNode), and then the node with that minimum value is deleted from the right subtree.
+Update Height and Rebalance:
+After the deletion, update the height of the current node.
+Calculate the balance factor and check if rebalancing is needed to maintain the AVL tree properties:
+Right Rotate: Perform if the current node becomes too left-heavy (balance > 1) and its left child is left-heavy or balanced (getBalance(rootNode.leftChild) >= 0).
+Left Rotate: Perform if the current node becomes too right-heavy (balance < -1) and its right child is right-heavy or balanced (getBalance(rootNode.rightChild) <= 0).
+Left-Right Rotate: Perform if the current node is left-heavy (balance > 1) but its left child is right-heavy (getBalance(rootNode.leftChild) < 0).
+Right-Left Rotate: Perform if the current node is right-heavy (balance < -1) but its right child is left-heavy (getBalance(rootNode.rightChild) > 0).
+Error and Typographical Notes:
+In your deleteNode function, there is a typo in the condition if balance<-11. It should likely be if balance < -1 to check for right-heavy imbalance.
+Ensure to deallocate the node properly or set it to None explicitly when it has children to prevent dangling references in a garbage-collected environment like Python.
+By following this structured approach to node deletion, the AVL tree maintains its balanced property, ensuring that the tree operations remain efficient.
+
+
+
+
+
+
