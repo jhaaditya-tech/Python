@@ -31,20 +31,14 @@ def partition(arr, low, high):
 
 def median_of_three(arr, low, mid, high):
     #Return the index of the median of arr[low], arr[mid], arr[high]
-    if arr[low]<arr[mid]:
-        if arr[mid]<arr[high]:
-            return mid
-        elif arr[low]<arr[high]:
-            return high
-        else:
-            return low
+    a,b,c=arr[low], arr[mid], arr[high]
+    if (a<=b<=c) or (c<=b<=a):
+        return mid
+    elif (b<=a<=c) or (c<=a<=b):
+        return low
     else:
-        if arr[low]<arr[high]:
-            return low
-        elif arr[mid]<arr[high]:
-            return high
-        else:
-            return mid
+        return high
+    
         
 arr = [5, 9, 7, 3, 2, 73, 89, 87]
 quick_sort(arr, 0, len(arr) - 1)
